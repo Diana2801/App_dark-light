@@ -41,9 +41,9 @@ class WirePainter extends CustomPainter {
       required this.themeProvider});
   void paint(Canvas canvas, Size size) {
     _paint = Paint()
-    ..color = themeProvider.themeMode().switchColor!
-    ..strokeWidth = 10
-    ..style = PaintingStyle.stroke;
+      ..color = themeProvider.themeMode().switchColor!
+      ..strokeWidth = 10
+      ..style = PaintingStyle.stroke;
   }
 
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;

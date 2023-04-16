@@ -11,21 +11,24 @@ main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLightTheme = prefs.getBool(SPref.isLight) ?? true;
   runApp(AppStart(
-    isLightTheme: isLightTheme,));
+    isLightTheme: isLightTheme,
+  ));
 }
+
 class AppStart extends StatelessWidget {
-  const AppStart({super.key,required this.isLightTheme});
+  const AppStart({super.key, required this.isLightTheme});
   final bool isLightTheme;
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers:[
+    return MultiProvider(providers: [
       ChangeNotifierProvider(
-        create: (_) =>ThemeProvider(isLightTheme: isLightTheme),
+        create: (_) => ThemeProvider(isLightTheme: isLightTheme),
       ),
-    ],child: MyApp());
+    ], child: MyApp());
   }
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

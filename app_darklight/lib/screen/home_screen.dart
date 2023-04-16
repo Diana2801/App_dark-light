@@ -1,8 +1,6 @@
 import 'package:app_darklight/app_theme.dart';
 import 'package:app_darklight/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -21,22 +19,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Offset containerPosition = const Offset(350, 350);
   Offset finalPosition = const Offset(350, 350);
 
-  void didChangeDependencies(){
+  void didChangeDependencies() {
     final Size size = MediaQuery.of(context).size;
     ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     initialPosition = Offset(size.width * .9, 0);
     containerPosition = Offset(size.width * .9, size.height * .4);
-    finalPosition = Offset(size.width * .9, size.height * .5-size.width * .1);
+    finalPosition = Offset(size.width * .9, size.height * .5 - size.width * .1);
 
-    if(themeProvider.isLightTheme) {
+    if (themeProvider.isLightTheme) {
       switchPosition = containerPosition;
     } else {
       switchPosition = finalPosition;
     }
-    
+
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -47,62 +46,60 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: RadialGradient(
             center: const Alignment(-0.8, -0.3),
             radius: 1,
-             colors:
-              themeProvider.themeMode().gradientColors!,
-           ),
+            colors: themeProvider.themeMode().gradientColors!,
+          ),
         ),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            
             leftPart(context, size, themeProvider),
             Positioned(
-              top: containerPosition.dy -size.width *.1 / 2 - 5,
-              left: containerPosition.dx -size.width *.1 / 2 - 5,
-                child: Container(
-                  width: size.width *.1 + 10,
-                  height: size.height*.1 + 10,
-                  decoration: BoxDecoration(
-                    color: themeProvider.themeMode().switchBgColor!,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+              top: containerPosition.dy - size.width * .1 / 2 - 5,
+              left: containerPosition.dx - size.width * .1 / 2 - 5,
+              child: Container(
+                width: size.width * .1 + 10,
+                height: size.height * .1 + 10,
+                decoration: BoxDecoration(
+                  color: themeProvider.themeMode().switchBgColor!,
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                ),
-                Wire(
-                  initialPosition: initialPosition,
-                  toOffset: switchPosition,
-                ),
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 0),
-                  top: switchPosition.dy - size.width * 0.1/2,
-                  left: switchPosition.dx - size.width * 0.1/2,
-                child:Draggable(
-                  feedback: Container(width: size.width * .1,
+              ),
+            ),
+            Wire(
+              initialPosition: initialPosition,
+              toOffset: switchPosition,
+            ),
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 0),
+              top: switchPosition.dy - size.width * 0.1 / 2,
+              left: switchPosition.dx - size.width * 0.1 / 2,
+              child: Draggable(
+                feedback: Container(
+                  width: size.width * .1,
                   height: size.width * .1,
                   decoration: const BoxDecoration(
                     color: Colors.transparent,
                     shape: BoxShape.circle,
-                    
                   ),
                 ),
-                onDragEnd: (details){
-                  if (themeProvider.isLightTheme){
+                onDragEnd: (details) {
+                  if (themeProvider.isLightTheme) {
                     setState(() {
-                    switchPosition = containerPosition;
-                  });
-                  }else{
-                     setState(() {
-                    switchPosition = finalPosition;
-                  });
-                }
-                themeProvider.toggleThemeData();
+                      switchPosition = containerPosition;
+                    });
+                  } else {
+                    setState(() {
+                      switchPosition = finalPosition;
+                    });
+                  }
+                  themeProvider.toggleThemeData();
                 },
-                onDragUpdate: (details){
+                onDragUpdate: (details) {
                   setState(() {
                     switchPosition = details.localPosition;
                   });
                 },
-                  child: Container( 
+                child: Container(
                   width: size.width * .1,
                   height: size.width * .1,
                   decoration: BoxDecoration(
@@ -114,27 +111,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                ),
-                
-                  
-                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  SafeArea leftPart(BuildContext context, Size size, ThemeProvider themeProvider) {
+  SafeArea leftPart(
+      BuildContext context, Size size, ThemeProvider themeProvider) {
     return SafeArea(
-            
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              "Universidad Nacional de Costa Rica",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Spacer(),
             Text(
-               DateFormat('j').format(DateTime.now()),
-              style: Theme.of(context).textTheme.headline1,
+              DateFormat('MMM dd yyy').format(DateTime.now()),
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              DateFormat('EEEE').format(DateTime.now()),
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              DateFormat('j').format(DateTime.now()),
+              style: const TextStyle(
+                fontSize: 70,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(
               width: size.width * .2,
@@ -146,14 +167,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Text(
               DateFormat('m').format(DateTime.now()),
-              style: Theme.of(context)
-              .textTheme
-              .headline1!
-              .copyWith(color: AppColors.white),
+              style: const TextStyle(
+                fontSize: 70,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const Spacer(), 
+            const Spacer(),
             const Text(
-              "Light Dark\nPersonal\nSwitch",
+              "Curso Móviles\nDiana Acuña Navarro\n2023",
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
@@ -162,18 +183,16 @@ class _HomeScreenState extends State<HomeScreen> {
             const Spacer(),
             Container(
               width: size.width * .2,
-              height: size.width * .2 ,
+              height: size.width * .2,
               decoration: BoxDecoration(
-                color:themeProvider
-                  .themeMode()
-                  .switchColor,
+                color: themeProvider.themeMode().switchColor,
                 borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-                Icons.nights_stay_outlined,
+              ),
+              child: const Icon(
+                Icons.sunny,
                 size: 50,
                 color: AppColors.white,
-            ),
+              ),
             ),
             SizedBox(
               width: size.width * .2,
@@ -183,30 +202,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.white,
               ),
             ),
-            Text(
-              "30\u00B0C",
-              style: Theme.of(context).textTheme.headline2!.copyWith(
-                color: AppColors.white,
-              )
+            const Text(
+              "Clima Soleado",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               "Clear",
               style: Theme.of(context).textTheme.headline6,
-               
-            ),
-            Text(
-              DateFormat('EEEE').format(DateTime.now()),
-              style: Theme.of(context).textTheme.headline6, 
-            ),
-            Text(
-              DateFormat('MMM ').format(DateTime.now()),
-              style: Theme.of(context).textTheme.headline6, 
             ),
           ],
-          ),
-          ),
-          );
+        ),
+      ),
+    );
   }
-  
- 
 }

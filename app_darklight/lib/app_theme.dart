@@ -65,7 +65,7 @@ class ThemeProvider with ChangeNotifier {
   ThemeMode themeMode() {
     return ThemeMode(
       gradientColors: isLightTheme
-          ? [AppColors.yellow, AppColors.yellowDark]
+          ? [AppColors.green, AppColors.green]
           : [AppColors.black, AppColors.black],
       switchColor: isLightTheme ? AppColors.black : AppColors.orange,
       thumbColor: isLightTheme ? AppColors.orange : AppColors.black,
